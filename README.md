@@ -1,6 +1,6 @@
-# beard-api
+# Beard API
 
-FIXME
+A silly API that will be part of a Kubernetes demo.
 
 ## Prerequisites
 
