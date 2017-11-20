@@ -35,10 +35,7 @@ build-image:
           mv * /app
 
     - internal/docker-push:
-        repository: dansmithy/beard-api
-        registry: https://registry.hub.docker.com/v2
-        username: $DOCKERHUB_USERNAME
-        password: $DOCKERHUB_PASSWORD
+        repository: wcr.io/dansmithy/beard-api
         tag: $WERCKER_GIT_BRANCH-$WERCKER_GIT_COMMIT,$WERCKER_GIT_COMMIT,latest
         cmd: java -jar /app/beard-api.jar
         working-dir: /app
