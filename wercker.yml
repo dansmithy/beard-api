@@ -1,0 +1,45 @@
+# docker box definition
+box:
+  id: clojure:lein-2.7.1-alpine
+  ports:
+    - "5000"
+
+# defining the dev pipeline
+dev:
+  steps:
+    - script:
+      name: lein ring
+      code: |
+        lein ring server-headless
+
+# Build definition
+build:
+  steps:
+    - script:
+        name: lein uberjar
+        code: |
+          lein uberjar
+    - script:
+        name: move jar
+        code: mv target/beard-api-1.0.0-SNAPSHOT-standalone.jar $WERCKER_OUTPUT_DIR/beard-api.jar
+
+build-image:
+  box:
+    id: nate9/minimaljava8
+
+  steps:
+    - script:
+        name: move jar
+        code: |
+          mkdir -p /app
+          mv * /app
+
+    - internal/docker-push:
+        repository: dansmithy/beard-api
+        registry: https://registry.hub.docker.com
+        username: $DOCKERHUB_USERNAME
+        password: $DOCKERHUB_PASSWORD
+        tag: $WERCKER_GIT_BRANCH-$WERCKER_GIT_COMMIT,$WERCKER_GIT_COMMIT,latest
+        cmd: java -jar /app/beard-api.jar
+        working-dir: /app
+        ports: "5000"
