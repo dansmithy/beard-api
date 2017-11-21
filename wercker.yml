@@ -41,6 +41,10 @@ build-image:
         working-dir: /app
         ports: "5000"
 
+    - script:
+        name: just write something
+        code: touch $WERCKER_OUTPUT_DIR/empty_file
+
 inject-secret:
     box:
         id: alpine
