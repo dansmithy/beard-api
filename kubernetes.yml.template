@@ -1,0 +1,44 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: beard-api
+  labels:
+    commit: ${WERCKER_GIT_COMMIT}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: beard-api
+  template:
+    metadata:
+      labels:
+        app: beard-api
+        commit: ${WERCKER_GIT_COMMIT}
+    spec:
+      containers:
+      - name: beard-api
+        image: ${DOCKER_REPO}:${WERCKER_GIT_BRANCH}-${WERCKER_GIT_COMMIT}
+        imagePullPolicy: Always
+        ports:
+        - name: beard-api
+          containerPort: 5000
+          protocol: TCP
+      imagePullSecrets:
+        - name: wercker    
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: beard-api
+  labels:
+    app: beard-api
+    commit: ${WERCKER_GIT_COMMIT}
+spec:
+  ports:
+  - port: 30000
+    targetPort: 500
+  selector:
+    app: beard-api
+    commit: ${WERCKER_GIT_COMMIT}
+  type: LoadBalancer
+---
