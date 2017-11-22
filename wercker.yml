@@ -19,13 +19,14 @@ build:
         name: lein uberjar
         code: |
           lein uberjar
+          
+    - script:
+        name: preserve kubernetes.template.yml
+        code: cp kubernetes.template.yml $WERCKER_OUTPUT_DIR/kubernetes.template.yml
+        
     - script:
         name: move jar
         code: mv target/beard-api-1.0.0-SNAPSHOT-standalone.jar $WERCKER_OUTPUT_DIR/beard-api.jar
-
-    - script:
-        name: preserve kubernetes.yml
-        code: cp kubernetes.yml $WERCKER_OUTPUT_DIR/kubernetes.yml
 
 build-image:
   box:
@@ -44,10 +45,6 @@ build-image:
         cmd: java -jar /app/beard-api.jar
         working-dir: /app
         ports: "5000"
-
-    - script:
-        name: preserve kubernetes.yml
-        code: cp kubernetes.yml $WERCKER_OUTPUT_DIR/kubernetes.yml
 
 inject-secret:
     box:
