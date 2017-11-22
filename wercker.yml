@@ -66,10 +66,6 @@ inject-secret:
         insecure-skip-tls-verify: true
         command: create secret docker-registry wercker --docker-server=$DOCKER_REGISTRY --docker-username=$DOCKER_USERNAME --docker-password=$KUBERNETES_TOKEN --docker-email=$DOCKER_EMAIL; echo create registry secret
 
-    - script:
-        name: preserve kubernetes.yml
-        code: cp kubernetes.yml $WERCKER_OUTPUT_DIR/kubernetes.yml
-
 deploy-to-cluster:
     box:
         id: alpine
