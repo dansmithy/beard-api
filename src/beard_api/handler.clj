@@ -26,6 +26,17 @@
   (GET "/" []
     {:status 200
      :body {:styles beard-styles}})
+
+  (GET "/request" request
+      {:status 200
+       :body (select-keys request [:headers
+                                   :server-port
+                                   :server-name
+                                   :remote-addr
+                                   :uri
+                                   :query-string
+                                   :scheme
+                                   :request-method])})
   (route/not-found "Not Found"))
 
 (def app

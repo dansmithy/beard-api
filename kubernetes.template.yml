@@ -5,7 +5,7 @@ metadata:
   labels:
     commit: ${WERCKER_GIT_COMMIT}
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: beard-api
@@ -35,7 +35,7 @@ metadata:
     commit: ${WERCKER_GIT_COMMIT}
 spec:
   ports:
-  - port: 5005
+  - port: 30000
     targetPort: 5000
   selector:
     app: beard-api
