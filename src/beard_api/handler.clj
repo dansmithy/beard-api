@@ -5,7 +5,8 @@
             [compojure.route :as route]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
             [ring.middleware.json :as json]
-            [config.core :as config.core])
+            [config.core :as config.core]
+            [clojure.string :as string])
   (:import [java.net InetAddress UnknownHostException]))
 
 (defonce env
@@ -26,6 +27,19 @@
 (defn get-ip-address
   []
   (str (InetAddress/getLocalHost)))
+
+(defn- add-to-host-sequence
+  [host-sequence]
+  (string/join " "
+            (cons (get-ip-address)
+                  (string/split (or host-sequence "") #" "))))
+
+(defn hostname-middleware
+  [handler]
+  (fn [request]
+    (let [{{host-sequence "X-Host-Sequence" :as headers} :headers :as response} (handler request)]
+      (assoc response :headers
+             (assoc headers "X-Host-Sequence" (add-to-host-sequence host-sequence))))))
 
 (defroutes app-routes
   (GET "/" []
@@ -52,6 +66,7 @@
 (def app
   (->
    app-routes
+   (hostname-middleware)
    (json/wrap-json-response)
    (json/wrap-json-body {:keywords? true})
    (wrap-defaults site-defaults)))
