@@ -2,7 +2,7 @@
   (:require [config.core :as config.core]
             [clj-http.client :as http]))
 
-(def timeout-in-ms 5000)
+(def timeout-in-ms 1000)
 
 (defn moustache-request
   []
