@@ -61,6 +61,10 @@
     {:status 200
      :body {:address (get-ip-address)}})
 
+  (GET "/env" []
+    {:status 200
+     :body (into (sorted-map) config.core/env)})
+
   (route/not-found "Not Found"))
 
 (def app
