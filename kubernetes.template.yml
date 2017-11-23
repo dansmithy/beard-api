@@ -35,7 +35,7 @@ metadata:
     commit: ${WERCKER_GIT_COMMIT}
 spec:
   ports:
-  - port: 30000
+  - port: 5005
     targetPort: 5000
   selector:
     app: beard-api
