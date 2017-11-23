@@ -6,8 +6,10 @@
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
             [ring.middleware.json :as json]
             [config.core :as config.core]
-            [clojure.string :as string])
+            [clojure.string :as string]
+            [beard-api.moustache :as moustache])
   (:import [java.net InetAddress UnknownHostException]))
+
 
 (defonce env
   (merge
@@ -43,8 +45,11 @@
 
 (defroutes app-routes
   (GET "/" []
-    {:status 200
-     :body {:styles beard-styles}})
+    (let [moustache-response (moustache/moustache-request)]
+      {:status 200
+       :headers {"X-Host-Sequence" (:host moustache-response)}
+       :body {:styles beard-styles
+              :moustache-styles (:styles (:data moustache-response))}}))
 
   (GET "/request" request
       {:status 200

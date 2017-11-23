@@ -7,7 +7,8 @@
                  [ring/ring-defaults "0.2.1"]
                  [ring/ring-json "0.4.0"]
                  [ring/ring-jetty-adapter "1.5.0"]
-                 [yogthos/config "0.9"]]
+                 [yogthos/config "0.9"]
+                 [clj-http "3.7.0"]]
   :plugins [[lein-ring "0.9.7"]]
   :main beard-api.handler
   :aot [beard-api.handler]
