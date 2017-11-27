@@ -7,9 +7,8 @@
 (defn moustache-request
   []
   (try
-    (let [url (format "http://%s:%s"
-                      (config.core/env :moustache-api-service-host)
-                      (config.core/env :moustache-api-service-port))
+    (let [url (format "http://%s"
+                      (config.core/env :moustache-api-base-url "moustache-api"))
           response
           (http/request
            {:method :get
