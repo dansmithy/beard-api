@@ -18,5 +18,7 @@
             :conn-timeout timeout-in-ms})]
       {:data (:body response)
        :host (-> response :headers (get "X-Host-Sequence"))})
-   (catch Exception e
-     {:data {:styles [{:name "<canned>"}]}})))
+    (catch Exception e
+      (do
+        (println "Failed to get response from Moustache API" e)
+        {:data {:styles [{:name "<canned>"}]}}))))
