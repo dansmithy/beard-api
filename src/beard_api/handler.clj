@@ -17,7 +17,7 @@
 (defonce env
   (merge
    {:port "5000"
-    :tweet-directory "tweet"}
+    :tweet-directory "/tweet"}
    config.core/env))
 
 (def beard-styles

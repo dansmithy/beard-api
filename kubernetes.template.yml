@@ -19,12 +19,19 @@ spec:
       - name: beard-api
         image: ${DOCKER_REPO}:${WERCKER_GIT_BRANCH}-${WERCKER_GIT_COMMIT}
         imagePullPolicy: Always
+        volumeMounts:
+        - name: beard-tweet-storage
+          mountPath: /tweet
         ports:
         - name: beard-api
           containerPort: 5000
           protocol: TCP
       imagePullSecrets:
-        - name: wercker    
+        - name: wercker
+      volumes:
+        - name: beard-tweet-storage
+          persistentVolumeClaim:
+            claimName: beard-volume-claim
 ---
 apiVersion: v1
 kind: Service
