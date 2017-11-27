@@ -30,7 +30,7 @@ build:
 
 build-image:
   box:
-    id: nate9/minimaljava8
+    id: anapsix/alpine-java:8_server-jre
 
   steps:
     - script:
