@@ -7,13 +7,17 @@
             [ring.middleware.json :as json]
             [config.core :as config.core]
             [clojure.string :as string]
-            [beard-api.moustache :as moustache])
+            [beard-api.moustache :as moustache]
+            [clojure.java.io :as io])
   (:import [java.net InetAddress UnknownHostException]))
 
+(def last-tweet-file "last_tweet")
+(def last-poll-run-date "last_run_date")
 
 (defonce env
   (merge
-   {:port "5000"}
+   {:port "5000"
+    :tweet-directory "tweet"}
    config.core/env))
 
 (def beard-styles
@@ -25,6 +29,14 @@
    {:name "Friendly mutton chops"}
    {:name "Full beard"}
    {:name "Garibaldi"}])
+
+(defn read-latest-tweet
+  []
+  (slurp (str (env :tweet-directory) "/" last-tweet-file)))
+
+(defn read-poll-run-date
+  []
+  (slurp (str (env :tweet-directory) "/" last-poll-run-date)))
 
 (defn get-ip-address
   []
@@ -49,7 +61,10 @@
       {:status 200
        :headers {"X-Host-Sequence" (:host moustache-response)}
        :body {:styles beard-styles
-              :moustache-styles (:styles (:data moustache-response))}}))
+              :moustache-styles (:styles (:data moustache-response))
+              :tweet
+              {:text (read-latest-tweet)
+               :poll-date (read-poll-run-date)}}}))
 
   (GET "/request" request
       {:status 200
