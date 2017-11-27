@@ -8,7 +8,7 @@
   []
   (try
     (let [url (format "http://%s"
-                      (config.core/env :moustache-api-base-url "moustache-api"))
+                      (config.core/env :moustache-api-base-url "moustache-api:30001"))
           response
           (http/request
            {:method :get
