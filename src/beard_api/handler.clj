@@ -11,9 +11,6 @@
             [clojure.java.io :as io])
   (:import [java.net InetAddress UnknownHostException]))
 
-(def last-tweet-file "last_tweet")
-(def last-poll-run-date "last_run_date")
-
 (defonce env
   (merge
    {:port "5000"
@@ -29,6 +26,9 @@
    {:name "Friendly mutton chops"}
    {:name "Full beard"}
    {:name "Garibaldi"}])
+
+(def last-tweet-file "last_tweet")
+(def last-poll-run-date "last_run_date")
 
 (defn read-latest-tweet
   []
