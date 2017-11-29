@@ -47,5 +47,7 @@ spec:
   selector:
     app: beard-api
     commit: ${WERCKER_GIT_COMMIT}
-  type: LoadBalancer
+# commented out following line, as Load balancers are in short supply.
+# Instead can access service endpoints using proxy mechanism.
+#  type: LoadBalancer
 ---
