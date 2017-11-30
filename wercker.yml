@@ -40,7 +40,7 @@ build-image:
           mv *.jar /app
 
     - internal/docker-push:
-        repository: wcr.io/dansmithy/beard-api
+        repository: wcr.io/${WERCKER_APPLICATION_OWNER_NAME}/beard-api
         tag: $WERCKER_GIT_BRANCH-$WERCKER_GIT_COMMIT,$WERCKER_GIT_COMMIT,latest
         cmd: java -jar /app/beard-api.jar
         working-dir: /app
